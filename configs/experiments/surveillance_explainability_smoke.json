@@ -1,0 +1,12 @@
+{
+  "experiment_name": "surveillance_explainability_smoke",
+  "temporal_config": "configs/experiments/temporal_surveillance_smoke.json",
+  "temporal_root": "results/generated/temporal_surveillance_smoke",
+  "temporal_artifact_root": "models/temporal_surveillance_smoke",
+  "baseline_artifact_root": "models/surveillance_baselines_smoke",
+  "output_root": "results/generated/surveillance_explainability_smoke",
+  "tree_shap_sample_per_year": 100,
+  "feature_limit": 2,
+  "seed_limit": 1,
+  "random_seed": 20260718
+}

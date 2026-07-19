@@ -1,0 +1,18 @@
+{
+  "experiment_name": "temporal_surveillance_analysis_smoke",
+  "temporal_root": "results/generated/temporal_surveillance_smoke",
+  "baseline_root": "results/generated/surveillance_baselines_smoke",
+  "output_root": "results/generated/temporal_surveillance_analysis_smoke",
+  "models": [
+    "temporal_tabular",
+    "range_persistence",
+    "logit_state",
+    "lgbm_price_liquidity",
+    "lgbm_state"
+  ],
+  "conformal_alphas": [0.10],
+  "selective_coverages": [0.50, 1.00],
+  "bootstrap_draws": 20,
+  "block_length": 5,
+  "random_seed": 20260718
+}

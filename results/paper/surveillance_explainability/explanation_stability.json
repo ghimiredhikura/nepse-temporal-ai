@@ -1,0 +1,9 @@
+{
+  "years": [
+    2024,
+    2025
+  ],
+  "temporal_occlusion_rank_spearman": 0.9288451012588943,
+  "temporal_occlusion_top10_jaccard": 0.6666666666666666,
+  "tree_shap_rank_spearman": 0.7870826491516147
+}

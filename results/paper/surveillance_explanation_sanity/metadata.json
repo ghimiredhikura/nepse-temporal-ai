@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "representative_model_seed": 17,
+  "randomization_seeds": [
+    1101,
+    1201,
+    1301
+  ],
+  "median_full_randomization_rank_spearman": 0.22085385878489328,
+  "maximum_full_randomization_rank_spearman": 0.3437328954570334,
+  "median_full_randomization_top10_jaccard": 0.25,
+  "sanity_gate_pass": true,
+  "gate_definition": "Median absolute trained-vs-fully-randomized rank Spearman < 0.50 and median top-10 Jaccard < 0.50.",
+  "importance_measure": "Mean absolute raw-probability change after complete historical replay with one standardized feature set to its refit-development mean.",
+  "trained_outer_predictions_unchanged": true
+}

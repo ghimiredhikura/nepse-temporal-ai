@@ -1,0 +1,36 @@
+{
+  "experiment_name": "temporal_surveillance_2024_2025",
+  "seeds": [17, 29, 43, 71, 101],
+  "train_start": "2014-06-17",
+  "maximum_epochs": 50,
+  "minimum_epochs": 15,
+  "early_stopping_patience": 8,
+  "early_stopping_minimum_delta": 0.0001,
+  "learning_rate": 0.001,
+  "minimum_learning_rate": 0.00001,
+  "warmup_epochs": 4,
+  "weight_decay": 0.0001,
+  "gradient_clip_norm": 2.0,
+  "tbptt_sessions": 20,
+  "hidden_dimension": 64,
+  "dropout": 0.1,
+  "model_artifact_root": "models/temporal_surveillance_2024_2025",
+  "result_root": "results/generated/temporal_surveillance_2024_2025",
+  "log_file": "logs/temporal_surveillance_2024_2025.log",
+  "folds": [
+    {
+      "fold": "eval_2024",
+      "development_end": "2021-12-31",
+      "selection_year": 2022,
+      "calibration_year": 2023,
+      "evaluation_year": 2024
+    },
+    {
+      "fold": "eval_2025",
+      "development_end": "2022-12-31",
+      "selection_year": 2023,
+      "calibration_year": 2024,
+      "evaluation_year": 2025
+    }
+  ]
+}

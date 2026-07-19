@@ -1,0 +1,20 @@
+{
+  "pr_auc_difference": {
+    "mean": 0.05736406113115703,
+    "p025": 0.04036147818543307,
+    "p975": 0.07429122356227383,
+    "probability_improvement": 1.0
+  },
+  "brier_difference": {
+    "mean": -0.003394250468934545,
+    "p025": -0.004827005645521174,
+    "p975": -0.0021691908392376586,
+    "probability_improvement": 1.0
+  },
+  "top_decile_precision_difference": {
+    "mean": 0.05795347188410711,
+    "p025": 0.03734129055663472,
+    "p975": 0.07936867301646298,
+    "probability_improvement": 1.0
+  }
+}

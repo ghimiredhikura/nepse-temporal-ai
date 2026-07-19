@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "comparison": "temporal_tabular minus lgbm_state",
+  "year_specific_pr_auc_ci_positive_all_years": true,
+  "year_specific_brier_ci_below_zero_all_years": true,
+  "temporal_conformal_nominal_inside_95ci_all_settings": false,
+  "temporal_conformal_absolute_error_within_0_02_all_settings": true,
+  "daily_alert_precision_ci_positive_all_budgets_years": false,
+  "daily_alert_precision_ci_positive_settings": 9,
+  "daily_alert_precision_total_settings": 10,
+  "interpretation": "Uncertainty is used for escalation rather than abstention because high ensemble disagreement is concentrated among true stress events."
+}

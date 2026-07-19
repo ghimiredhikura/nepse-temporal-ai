@@ -1,0 +1,9 @@
+{
+  "experiment_name": "surveillance_explanation_sanity",
+  "temporal_config": "configs/experiments/temporal_surveillance_2024_2025.json",
+  "temporal_root": "results/generated/temporal_surveillance_2024_2025",
+  "temporal_artifact_root": "models/temporal_surveillance_2024_2025",
+  "output_root": "results/generated/surveillance_explanation_sanity",
+  "representative_model_seed": 17,
+  "randomization_seeds": [1101, 1201, 1301]
+}

@@ -1,0 +1,29 @@
+{
+  "status": "complete",
+  "target_journal": "Journal of Forecasting",
+  "bootstrap_draws": 2000,
+  "block_length_sessions": 5,
+  "evaluation_years": [
+    2024,
+    2025
+  ],
+  "models": [
+    "temporal_tabular",
+    "lgbm_state"
+  ],
+  "alert_budgets": [
+    0.01,
+    0.025,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "missed_event_costs": [
+    2.0,
+    5.0,
+    10.0,
+    20.0,
+    50.0
+  ],
+  "outer_predictions_reused_without_retraining": true
+}

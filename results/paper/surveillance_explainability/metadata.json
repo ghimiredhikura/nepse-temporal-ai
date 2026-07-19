@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "temporal_explanation": "Entire historical sequence replayed with standardized feature set to its refit-development mean.",
+  "tree_explanation": "TreeSHAP on fixed LightGBM outer-year samples",
+  "tree_shap_sample_per_year": 10000,
+  "stability": {
+    "years": [
+      2024,
+      2025
+    ],
+    "temporal_occlusion_rank_spearman": 0.9288451012588943,
+    "temporal_occlusion_top10_jaccard": 0.6666666666666666,
+    "tree_shap_rank_spearman": 0.7870826491516147
+  }
+}

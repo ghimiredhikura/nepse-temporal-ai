@@ -1,0 +1,22 @@
+{
+  "experiment_name": "surveillance_baselines_smoke",
+  "models": [
+    "logit_state",
+    "lgbm_price_liquidity",
+    "lgbm_state"
+  ],
+  "seeds": [17],
+  "train_start": "2021-01-01",
+  "model_artifact_root": "models/surveillance_baselines_smoke",
+  "result_root": "results/generated/surveillance_baselines_smoke",
+  "log_file": "logs/surveillance_baselines_smoke.log",
+  "folds": [
+    {
+      "fold": "eval_2024",
+      "development_end": "2021-12-31",
+      "selection_year": 2022,
+      "calibration_year": 2023,
+      "evaluation_year": 2024
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code or processed sample, please cite the associated paper."
+title: "Explainable Temporal AI for Rare-Event Surveillance in NEPSE"
+type: software
+version: 1.0.0
+date-released: 2026-07-19
+license: MIT
+url: "https://github.com/ghimiredhikura/nepse-temporal-ai"
+authors:
+  - family-names: Ghimire
+    given-names: Deepak
+    orcid: "https://orcid.org/0000-0001-8940-8739"
+  - family-names: Kim
+    given-names: Seong-heum
+    orcid: "https://orcid.org/0000-0003-2551-0157"
+preferred-citation:
+  type: article
+  title: "Explainable and Calibrated Temporal Artificial Intelligence for Rare-Event Surveillance in a Frontier Stock Market: Rolling Evidence from Nepal"
+  authors:
+    - family-names: Ghimire
+      given-names: Deepak
+    - family-names: Kim
+      given-names: Seong-heum
+  year: 2026

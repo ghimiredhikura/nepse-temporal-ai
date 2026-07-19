@@ -1,0 +1,23 @@
+{
+  "experiment_name": "surveillance_journal_robustness",
+  "target_journal": "Journal of Forecasting",
+  "analysis_root": "results/generated/temporal_surveillance_analysis",
+  "output_root": "results/generated/surveillance_journal_robustness",
+  "models": [
+    "temporal_tabular",
+    "lgbm_state"
+  ],
+  "left_model": "temporal_tabular",
+  "right_model": "lgbm_state",
+  "bootstrap_draws": 2000,
+  "block_length": 5,
+  "random_seed": 20260718,
+  "top_fraction": 0.10,
+  "conformal_alphas": [0.05, 0.10],
+  "alert_budgets": [0.01, 0.025, 0.05, 0.10, 0.20],
+  "missed_event_costs": [2, 5, 10, 20, 50],
+  "decision_thresholds": [
+    0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10,
+    0.12, 0.14, 0.16, 0.18, 0.20, 0.25, 0.30, 0.40
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "experiment_name": "surveillance_explainability",
+  "temporal_config": "configs/experiments/temporal_surveillance_2024_2025.json",
+  "temporal_root": "results/generated/temporal_surveillance_2024_2025",
+  "temporal_artifact_root": "models/temporal_surveillance_2024_2025",
+  "baseline_artifact_root": "models/surveillance_baselines_2024_2025",
+  "output_root": "results/generated/surveillance_explainability",
+  "tree_shap_sample_per_year": 10000,
+  "random_seed": 20260718
+}

@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "evaluation_rows": 539780,
+  "calibration_rows": 497480,
+  "models": [
+    "temporal_tabular",
+    "range_persistence",
+    "logit_state",
+    "lgbm_price_liquidity",
+    "lgbm_state"
+  ],
+  "bootstrap_draws": 2000,
+  "block_length": 5,
+  "conformal_alphas": [
+    0.05,
+    0.1
+  ],
+  "regime_threshold_source": "preceding conformal-calibration half"
+}
