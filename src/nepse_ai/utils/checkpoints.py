@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
-import hashlib
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 
 import torch
+
+from .hashing import sha256_file
 
 
 def save_local_checkpoint(
@@ -13,7 +15,17 @@ def save_local_checkpoint(
 ) -> str:
     destination = destination.resolve()
     destination.parent.mkdir(parents=True, exist_ok=True)
-    temporary = destination.with_suffix(destination.suffix + ".tmp")
-    torch.save(payload, temporary)
-    temporary.replace(destination)
-    return hashlib.sha256(destination.read_bytes()).hexdigest()
+    with NamedTemporaryFile(
+        dir=destination.parent,
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+        delete=False,
+    ) as temporary_file:
+        temporary = Path(temporary_file.name)
+
+    try:
+        torch.save(payload, temporary)
+        temporary.replace(destination)
+    finally:
+        temporary.unlink(missing_ok=True)
+    return sha256_file(destination)

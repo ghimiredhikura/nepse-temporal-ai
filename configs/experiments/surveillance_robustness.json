@@ -1,8 +1,7 @@
 {
-  "experiment_name": "surveillance_journal_robustness",
-  "target_journal": "Journal of Forecasting",
+  "experiment_name": "surveillance_robustness",
   "analysis_root": "results/generated/temporal_surveillance_analysis",
-  "output_root": "results/generated/surveillance_journal_robustness",
+  "output_root": "results/generated/surveillance_robustness",
   "models": [
     "temporal_tabular",
     "lgbm_state"

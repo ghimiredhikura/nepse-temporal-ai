@@ -7,12 +7,12 @@ It does not refit a model or claim that the sample reproduces the paper.
 
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 
 import matplotlib
 import pandas as pd
+from nepse_ai.utils import sha256_file
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -28,7 +28,7 @@ METRICS = (
 )
 BOOTSTRAP = (
     PAPER_RESULTS
-    / "surveillance_journal_robustness"
+    / "surveillance_robustness"
     / "year_specific_bootstrap_summary.csv"
 )
 SAMPLE = (
@@ -57,16 +57,37 @@ MODEL_LABELS = {
 }
 
 
+def require_columns(
+    frame: pd.DataFrame,
+    required: set[str],
+    source: Path,
+) -> None:
+    """Raise a clear error when a result artefact has an unexpected schema."""
+    missing = sorted(required - set(frame.columns))
+    if missing:
+        raise ValueError(f"{source} is missing required columns: {missing}")
+
+
 def build_main_table() -> pd.DataFrame:
     """Create the outer-year and pooled performance table."""
     metrics = pd.read_csv(METRICS)
+    require_columns(
+        metrics,
+        {"evaluation_year", "model", "pr_auc", "brier"},
+        METRICS,
+    )
     metrics["evaluation_year"] = metrics["evaluation_year"].astype(str)
     metrics = metrics.loc[metrics["model"].isin(MODEL_ORDER)].copy()
 
     records: list[dict[str, str | float]] = []
     for model in MODEL_ORDER:
         record: dict[str, str | float] = {"Model": MODEL_LABELS[model]}
-        for period, label in [("2024", "2024"), ("2025", "2025"), ("pooled", "Pooled")]:
+        periods = [
+            ("2024", "2024"),
+            ("2025", "2025"),
+            ("pooled", "Pooled"),
+        ]
+        for period, label in periods:
             row = metrics.loc[
                 metrics["model"].eq(model)
                 & metrics["evaluation_year"].eq(period)
@@ -105,6 +126,17 @@ def build_main_table() -> pd.DataFrame:
 def build_main_figure() -> None:
     """Plot paired block-bootstrap improvements over full-state LightGBM."""
     summary = pd.read_csv(BOOTSTRAP)
+    require_columns(
+        summary,
+        {
+            "evaluation_year",
+            "metric",
+            "point_estimate",
+            "ci_lower",
+            "ci_upper",
+        },
+        BOOTSTRAP,
+    )
     specifications = [
         ("pr_auc_difference", "PR-AUC gain", False),
         ("brier_difference", "Brier-score reduction", True),
@@ -133,6 +165,11 @@ def build_main_figure() -> None:
     for axis, (metric, title, reverse_sign) in zip(axes, specifications):
         selected = summary.loc[summary["metric"].eq(metric)].copy()
         selected = selected.sort_values("evaluation_year", ascending=False)
+        years = set(selected["evaluation_year"].astype(int))
+        if len(selected) != 2 or years != {2024, 2025}:
+            raise ValueError(
+                f"{BOOTSTRAP} must contain one {metric} row for 2024 and 2025."
+            )
         y_positions = range(len(selected))
         for y_position, row in zip(y_positions, selected.itertuples(index=False)):
             point = float(row.point_estimate)
@@ -167,7 +204,11 @@ def build_main_figure() -> None:
     figure.savefig(
         OUTPUT / "main_result_figure.pdf",
         bbox_inches="tight",
-        metadata={"Creator": "NEPSE release main.py"},
+        metadata={
+            "Creator": "NEPSE release main.py",
+            "CreationDate": None,
+            "ModDate": None,
+        },
     )
     plt.close(figure)
 
@@ -175,12 +216,52 @@ def build_main_figure() -> None:
 def validate_sample() -> dict[str, object]:
     """Check the dimensions and checksum of the processed sample."""
     manifest = json.loads(SAMPLE_MANIFEST.read_text(encoding="utf-8"))
+    required_manifest_fields = {
+        "file",
+        "rows",
+        "columns",
+        "securities",
+        "events",
+        "date_min",
+        "date_max",
+        "sha256",
+        "selected_security_ids",
+    }
+    missing_manifest_fields = sorted(
+        required_manifest_fields - set(manifest)
+    )
+    if missing_manifest_fields:
+        raise ValueError(
+            "Sample manifest is missing required fields: "
+            f"{missing_manifest_fields}"
+        )
+    if manifest["file"] != SAMPLE.name:
+        raise ValueError("Sample manifest file name does not match the data file.")
+
     sample = pd.read_parquet(SAMPLE)
-    checksum = hashlib.sha256(SAMPLE.read_bytes()).hexdigest()
+    require_columns(
+        sample,
+        {"date", "security_id", "next_range_stress"},
+        SAMPLE,
+    )
+    dates = pd.to_datetime(sample["date"], errors="raise")
+    observed_security_ids = {
+        int(value) for value in sample["security_id"].unique()
+    }
+    expected_security_ids = {
+        int(value) for value in manifest["selected_security_ids"]
+    }
     checks = {
         "rows": len(sample) == int(manifest["rows"]),
         "columns": len(sample.columns) == int(manifest["columns"]),
-        "sha256": checksum == manifest["sha256"],
+        "securities": len(observed_security_ids)
+        == int(manifest["securities"]),
+        "security_ids": observed_security_ids == expected_security_ids,
+        "events": int(sample["next_range_stress"].sum())
+        == int(manifest["events"]),
+        "date_min": dates.min().date().isoformat() == manifest["date_min"],
+        "date_max": dates.max().date().isoformat() == manifest["date_max"],
+        "sha256": sha256_file(SAMPLE) == manifest["sha256"],
     }
     if not all(checks.values()):
         failed = ", ".join(name for name, passed in checks.items() if not passed)
@@ -205,7 +286,7 @@ def main() -> None:
         "This sample supports code and schema checks; it does not reproduce "
         "the full paper estimates."
     )
-    print(f"\nGenerated outputs: {OUTPUT}")
+    print(f"\nGenerated outputs: {OUTPUT.relative_to(ROOT).as_posix()}")
 
 
 if __name__ == "__main__":

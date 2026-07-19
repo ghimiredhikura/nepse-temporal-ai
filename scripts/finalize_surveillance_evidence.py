@@ -1,4 +1,4 @@
-"""Journal-facing robustness, calibration, and decision analysis."""
+"""Robustness, calibration, and decision analysis."""
 
 from __future__ import annotations
 
@@ -573,7 +573,7 @@ def make_figures(
     plt.close(figure)
 
 
-def build_readiness_summary(
+def build_robustness_summary(
     comparison: pd.DataFrame,
     conformal: pd.DataFrame,
     alert_summary: pd.DataFrame,
@@ -750,19 +750,18 @@ def main() -> None:
         left_model,
         right_model,
     )
-    readiness = build_readiness_summary(
+    robustness_summary = build_robustness_summary(
         comparison_summary,
         conformal_summary,
         alert_summary,
         left_model,
         right_model,
     )
-    (output / "journal_readiness_summary.json").write_text(
-        json.dumps(readiness, indent=2), encoding="utf-8"
+    (output / "robustness_summary.json").write_text(
+        json.dumps(robustness_summary, indent=2), encoding="utf-8"
     )
     metadata = {
         "status": "complete",
-        "target_journal": configuration["target_journal"],
         "bootstrap_draws": draws,
         "block_length_sessions": block_length,
         "evaluation_years": sorted(
@@ -776,7 +775,7 @@ def main() -> None:
     (output / "metadata.json").write_text(
         json.dumps(metadata, indent=2), encoding="utf-8"
     )
-    print(json.dumps(readiness, indent=2), flush=True)
+    print(json.dumps(robustness_summary, indent=2), flush=True)
     print(comparison_summary.to_string(index=False), flush=True)
 
 

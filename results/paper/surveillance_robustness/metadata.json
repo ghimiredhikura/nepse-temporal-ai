@@ -1,6 +1,5 @@
 {
   "status": "complete",
-  "target_journal": "Journal of Forecasting",
   "bootstrap_draws": 2000,
   "block_length_sessions": 5,
   "evaluation_years": [

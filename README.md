@@ -59,8 +59,8 @@ prediction files, trained checkpoints, and the manuscript's conceptual
 workflow figure are excluded.
 
 The full experiment sequence is in
-`scripts/run_temporal_surveillance_experiment.ps1`; final robustness checks are
-in `scripts/run_journal_completion.ps1`. See `data/README.md` for sample
+`scripts/run_temporal_surveillance_experiment.sh`; final robustness checks are
+in `scripts/run_robustness_checks.sh`. See `data/README.md` for sample
 details.
 
 ## Licence and citation

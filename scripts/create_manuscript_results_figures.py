@@ -1,4 +1,4 @@
-"""Create journal-ready multipanel figures from locked NEPSE results.
+"""Create publication figures from locked NEPSE results.
 
 The script reads only completed outer-evaluation artifacts. It does not refit,
 recalibrate, or otherwise alter any forecast.
@@ -123,7 +123,11 @@ def save(
         OUTPUT / f"{stem}.pdf",
         bbox_inches="tight",
         pad_inches=pad_inches,
-        metadata={"Creator": "NEPSE manuscript figure pipeline"},
+        metadata={
+            "Creator": "NEPSE manuscript figure pipeline",
+            "CreationDate": None,
+            "ModDate": None,
+        },
     )
     figure.savefig(
         OUTPUT / f"{stem}.png",
@@ -198,12 +202,12 @@ def reliability_figure() -> None:
 def operational_figure() -> None:
     alert = pd.read_csv(
         RESULTS
-        / "surveillance_journal_robustness"
+        / "surveillance_robustness"
         / "daily_alert_metrics.csv"
     )
     decision = pd.read_csv(
         RESULTS
-        / "surveillance_journal_robustness"
+        / "surveillance_robustness"
         / "decision_curve.csv"
     )
     alert = alert.loc[alert["model"].isin([TEMPORAL, TREE])]

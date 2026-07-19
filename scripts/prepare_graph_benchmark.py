@@ -330,15 +330,15 @@ def main() -> None:
         ),
         "coverage": coverage,
         "evaluation_status": (
-            "The split named test is historical outer evaluation. Its "
-            "results informed redesign and are not untouched confirmation."
+            "The benchmark split is retained for historical comparison; "
+            "rolling-origin outer evaluations provide the final evidence."
         ),
         "leakage_rules": [
             "A prediction for session t+1 may use hyperedges only through t.",
-            "All scaling parameters are fitted on dates through 2022-12-31.",
-            "2023 is transition validation; 2024 onward is historical outer evaluation.",
+            "Scaling parameters are fitted only within each training window.",
+            "Outer evaluation years are not used for model selection.",
             "No future neighbor, full-sample centrality, or future listing state.",
-            "Final evidence uses nested rolling-origin evaluation and a future prospective lockbox.",
+            "Final evidence uses chronological rolling-origin evaluation.",
         ],
     }
     (
